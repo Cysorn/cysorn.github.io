@@ -1,60 +1,82 @@
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Berechnung der erforderlichen Prüfungsnote</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Berechnung der erforderlichen Prüfungsnote</title>
+  <style>
+    body {
+      margin: 0; /* Remove default margin from body */
+    }
+
+    .content {
+      display: flex;
+    }
+
+    .calculator form {
+      margin-bottom: 20px; /* Add some space after the form */
+    }
+
+    .row {
+      display: flex;
+      margin-bottom: 10px;
+    }
+
+    label {
+      width: 200px;
+      text-align: right;
+      margin-right: 10px;
+    }
+
+    .img {
+      margin-left: 200px; /* Move the image 20px to the right */
+    }
+  </style>
 </head>
 <body>
-    <h1>Berechnung der erforderlichen Prüfungsnote</h1>
-    <p>Bitte geben Sie die Werte ein:</p>
-    <form id="berechnungsformular">
+  <h1>Berechnung der erforderlichen Prüfungsnote</h1>
+  <div class="content">
+    <div class="calculator">
+	  <p>Bitte geben Sie die Werte ein:</p>
+      <form id="berechnungsformular">
         <div class="row">
-            <label for="a">Punkte schriftlich (35%):</label>
-            <input type="number" id="a" name="a" min="0" max="15" required>
+          <label for="a">Punkte schriftlich (35%):</label>
+          <input type="number" id="a" name="a" min="0" max="15" required="">
         </div>
 
         <div class="row">
-            <label for="b">Punkte mündlich (35%):</label>
-            <input type="number" id="b" name="b" min="0" max="15" required>
+          <label for="b">Punkte mündlich (35%):</label>
+          <input type="number" id="b" name="b" min="0" max="15" required="">
         </div>
 
         <div class="row">
-            <label for="x">Punkte gewünscht (100%):</label>
-            <input type="number" id="x" name="x" min="0" max="100" required>
+          <label for="x">Punkte gewünscht (100%):</label>
+          <input type="number" id="x" name="x" min="0" max="100" required="">
         </div>
 
         <button type="button" onclick="berechnen()">Berechnen</button>
-    </form>
+        
+      </form>
+	  <div id="ergebnis">Punkte bei der Prüfung notwendig: 15.00</div>
+    </div>
+    <img src="grades.png" alt="Grades image" class="img">
+  </div>
 
-    <div id="ergebnis"></div>
+  <script>
+    function berechnen() {
+      const a = parseFloat(document.getElementById("a").value);
+      const b = parseFloat(document.getElementById("b").value);
+      const x = parseFloat(document.getElementById("x").value);
 
-    <script>
-        function berechnen() {
-            const a = parseFloat(document.getElementById("a").value);
-            const b = parseFloat(document.getElementById("b").value);
-            const x = parseFloat(document.getElementById("x").value);
+      const c = (x - (35 * a / 100) - (35 * b / 100)) * (100 / 30);
 
-            const c = (x - (35 * a / 100) - (35 * b / 100)) * (100 / 30);
-
-            if (c > 15.00) {
-                document.getElementById("ergebnis").innerHTML = "Die schriftlichen und mündlichen Noten sind nicht ausreichend.";
-            } else {
-                document.getElementById("ergebnis").innerHTML = "Punkte bei der Prüfung notwendig: " + c.toFixed(2);
-            }
-        }
-    </script>
-    <style>
-        .row {
-            display: flex;
-            margin-bottom: 10px;
-        }
-
-        label {
-            width: 200px;
-            text-align: right;
-            margin-right: 10px;
-        }
-    </style>
+      if (c > 15.00) {
+        document.getElementById("ergebnis").innerHTML = "Die schriftlichen und mündlichen Noten sind nicht ausreichend.";
+      } else {
+        document.getElementById("ergebnis").innerHTML = "Punkte bei der Prüfung notwendig: " + c.toFixed(2);
+      }
+    }
+  </script>
 </body>
 </html>
